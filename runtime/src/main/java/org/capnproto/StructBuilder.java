@@ -21,13 +21,14 @@
 
 package org.capnproto;
 
-public class StructBuilder {
+public class StructBuilder implements HadCapTable {
     public interface Factory<T> {
         T constructBuilder(SegmentBuilder segment, int data, int pointers, int dataSize,
                            short pointerCount);
         StructSize structSize();
     }
 
+    private Object capTable;
     protected final SegmentBuilder segment;
     protected final int data; // byte offset to data section
     protected final int pointers; // word offset of pointer section
@@ -41,6 +42,16 @@ public class StructBuilder {
         this.pointers = pointers;
         this.dataSize = dataSize;
         this.pointerCount = pointerCount;
+    }
+
+    @Override
+    public Object getCapTable() {
+        return capTable;
+    }
+
+    @Override
+    public void setCapTable(Object capTable) {
+        this.capTable = capTable;
     }
 
     protected final boolean _getBooleanField(int offset) {
@@ -255,5 +266,13 @@ public class StructBuilder {
                                     other.pointers + ii,
                                     other.nestingLimit);
         }
+    }
+
+    public SegmentBuilder getSegment() {
+        return segment;
+    }
+
+    public int getPointers() {
+        return pointers;
     }
 }

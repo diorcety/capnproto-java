@@ -21,13 +21,17 @@
 
 package org.capnproto;
 
-public final class MessageBuilder {
+public class MessageBuilder {
 
     private final BuilderArena arena;
 
     public MessageBuilder() {
         this.arena = new BuilderArena(BuilderArena.SUGGESTED_FIRST_SEGMENT_WORDS,
                                       BuilderArena.SUGGESTED_ALLOCATION_STRATEGY);
+    }
+
+    public MessageBuilder(BuilderArena arena) {
+        this.arena = arena;
     }
 
     public MessageBuilder(int firstSegmentWords) {

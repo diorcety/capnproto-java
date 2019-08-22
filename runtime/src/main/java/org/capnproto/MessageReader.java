@@ -23,13 +23,18 @@ package org.capnproto;
 
 import java.nio.ByteBuffer;
 
-public final class MessageReader {
+public class MessageReader {
     final ReaderArena arena;
     final int nestingLimit;
 
     public MessageReader(ByteBuffer[] segmentSlices, ReaderOptions options) {
         this.nestingLimit = options.nestingLimit;
         this.arena = new ReaderArena(segmentSlices, options.traversalLimitInWords);
+    }
+
+    public MessageReader(ReaderArena arena, int nestingLimit) {
+        this.arena = arena;
+        this.nestingLimit = nestingLimit;
     }
 
     public <T> T getRoot(FromPointerReader<T> factory) {

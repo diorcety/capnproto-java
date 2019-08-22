@@ -21,13 +21,14 @@
 
 package org.capnproto;
 
-public class StructReader {
+public class StructReader implements HadCapTable {
     public interface Factory<T> {
         abstract T constructReader(SegmentReader segment, int data, int pointers,
                                    int dataSize, short pointerCount,
                                    int nestingLimit);
     }
 
+    private Object capTable;
     protected final SegmentReader segment;
     protected final int data; //byte offset to data section
     protected final int pointers; // word offset of pointer section
@@ -53,6 +54,16 @@ public class StructReader {
         this.dataSize = dataSize;
         this.pointerCount = pointerCount;
         this.nestingLimit = nestingLimit;
+    }
+
+    @Override
+    public Object getCapTable() {
+        return capTable;
+    }
+
+    @Override
+    public void setCapTable(Object capTable) {
+        this.capTable = capTable;
     }
 
     protected final boolean _getBooleanField(int offset) {
@@ -201,4 +212,15 @@ public class StructReader {
         }
     }
 
+    public SegmentReader getSegment() {
+        return segment;
+    }
+
+    public int getPointers() {
+        return pointers;
+    }
+
+    public int getNestingLimit() {
+        return nestingLimit;
+    }
 }

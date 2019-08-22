@@ -21,13 +21,14 @@
 
 package org.capnproto;
 
-public class ListBuilder {
+public class ListBuilder implements HadCapTable {
     public interface Factory<T> {
         T constructBuilder(SegmentBuilder segment, int ptr,
                            int elementCount, int step,
                            int structDataSize, short structPointerCount);
     }
 
+    private Object capTable;
     final SegmentBuilder segment;
     final int ptr; // byte offset to front of list
     final int elementCount;
@@ -44,6 +45,16 @@ public class ListBuilder {
         this.step = step;
         this.structDataSize = structDataSize;
         this.structPointerCount = structPointerCount;
+    }
+
+    @Override
+    public Object getCapTable() {
+        return capTable;
+    }
+
+    @Override
+    public void setCapTable(Object capTable) {
+        this.capTable = capTable;
     }
 
     public int size() {

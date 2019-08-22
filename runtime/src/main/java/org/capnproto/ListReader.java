@@ -21,7 +21,7 @@
 
 package org.capnproto;
 
-public class ListReader {
+public class ListReader implements HadCapTable {
     public interface Factory<T> {
         T constructReader(SegmentReader segment,
                           int ptr,
@@ -30,6 +30,7 @@ public class ListReader {
                           int nestingLimit);
     }
 
+    private Object capTable;
     final SegmentReader segment;
     final int ptr; // byte offset to front of list
     final int elementCount;
@@ -59,7 +60,16 @@ public class ListReader {
         this.structDataSize = structDataSize;
         this.structPointerCount = structPointerCount;
         this.nestingLimit = nestingLimit;
+    }
 
+    @Override
+    public Object getCapTable() {
+        return capTable;
+    }
+
+    @Override
+    public void setCapTable(Object capTable) {
+        this.capTable = capTable;
     }
 
     public int size() {
