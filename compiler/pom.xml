@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.capnproto</groupId>
+        <artifactId>capnproto-java</artifactId>
+        <version>0.1.4-X-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>compiler</artifactId>
+    <version>0.1.4-X-SNAPSHOT</version>
+
+    <profiles>
+        <profile>
+            <id>linux</id>
+            <activation>
+                <os>
+                    <family>linux</family>
+                </os>
+            </activation>
+            <properties>
+                <capnp-OS>linux</capnp-OS>
+                <capnp-Tuple>unknown-linux-gnu</capnp-Tuple>
+                <cmake.child.dir>cmake</cmake.child.dir>
+                <cmake.build.type>Debug</cmake.build.type>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>windows</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+            <properties>
+                <capnp-OS>win32</capnp-OS>
+                <capnp-Tuple>pc-windows</capnp-Tuple>
+                <cmake.child.dir>cmake.exe</cmake.child.dir>
+                <cmake.build.type>RelWithDebInfo</cmake.build.type>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>64bits</id>
+            <properties>
+                <capnp-Arch>x86_64</capnp-Arch>
+                <build.architecture>x86_64</build.architecture>
+            </properties>
+        </profile>
+        <profile>
+            <id>32bits</id>
+            <properties>
+                <capnp-Arch>i686</capnp-Arch>
+                <build.architecture>x86_32</build.architecture>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>release</id>
+            <properties>
+                <cmake.build.type>Release</cmake.build.type>
+            </properties>
+        </profile>
+    </profiles>
+
+    <properties>
+        <cmake.classifier>${capnp-OS}-${build.architecture}</cmake.classifier>
+        <cmake.generator>Ninja</cmake.generator>
+        <cmake.root.dir></cmake.root.dir>
+        <download.cmake>false</download.cmake>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.googlecode.cmake-maven-project</groupId>
+                <artifactId>cmake-maven-plugin</artifactId>
+                <version>3.7.2-b2X</version>
+                <executions>
+                    <execution>
+                        <id>cmake-generate</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <options>
+                                <option>-DCMAKE_BUILD_TYPE=${cmake.build.type}</option>
+                            </options>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>cmake-compile</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <sourcePath>${project.basedir}/../cmake</sourcePath>
+                    <targetPath>${project.basedir}/..</targetPath>
+                    <projectDirectory>${project.basedir}/..</projectDirectory>
+                    <generator>${cmake.generator}</generator>
+                    <classifier>${cmake.classifier}</classifier>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
