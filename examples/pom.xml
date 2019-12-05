@@ -7,17 +7,17 @@
     <parent>
         <groupId>org.capnproto</groupId>
         <artifactId>capnproto-java</artifactId>
-        <version>0.1.4-X-SNAPSHOT</version>
+        <version>0.1.4-X</version>
     </parent>
 
     <artifactId>examples</artifactId>
-    <version>0.1.4-X-SNAPSHOT</version>
+    <version>0.1.4-X</version>
 
     <dependencies>
         <dependency>
             <groupId>org.capnproto</groupId>
             <artifactId>runtime</artifactId>
-            <version>0.1.4-X-SNAPSHOT</version>
+            <version>0.1.4-X</version>
         </dependency>
     </dependencies>
 

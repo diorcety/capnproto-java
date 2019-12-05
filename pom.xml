@@ -6,7 +6,7 @@
 
     <groupId>org.capnproto</groupId>
     <artifactId>capnproto-java</artifactId>
-    <version>0.1.4-X-SNAPSHOT</version>
+    <version>0.1.4-X</version>
     <packaging>pom</packaging>
 
     <distributionManagement>

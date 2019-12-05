@@ -7,11 +7,11 @@
     <parent>
         <groupId>org.capnproto</groupId>
         <artifactId>capnproto-java</artifactId>
-        <version>0.1.4-X-SNAPSHOT</version>
+        <version>0.1.4-X</version>
     </parent>
 
     <artifactId>compiler</artifactId>
-    <version>0.1.4-X-SNAPSHOT</version>
+    <version>0.1.4-X</version>
 
     <profiles>
         <profile>
